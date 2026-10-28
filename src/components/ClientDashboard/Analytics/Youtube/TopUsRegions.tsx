@@ -1,0 +1,87 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+import location from "@/assets/icons/location.svg";
+import { TopUSRegion } from "@/redux/features/analytics/analytics.type";
+
+interface TopUsRegionsProps {
+  data?: TopUSRegion[];
+}
+
+export function TopUsRegions({ data }: TopUsRegionsProps) {
+  return (
+    <div className="bg-[#0C2322] border border-[#313E41] rounded-2xl shadow-sm p-4 md:p-6 space-y-4 md:space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-lg md:text-2xl font-medium text-white">
+            Top US Regions
+          </h1>
+        </div>
+        <div>
+          <button className="text-sm md:text-base text-[#3A5CFF] hover:text-[#052fff] font-medium cursor-pointer hover:underline">
+            Geo Trends
+          </button>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto">
+        <Table className="w-full min-w-[600px] md:min-w-full">
+          <TableHeader>
+            <TableRow className="text-[#BDBDBD] border-b border-[#313E41]/30">
+              <TableHead className="w-[160px] md:w-[200px] px-2 md:px-4 py-2">
+                US Region
+              </TableHead>
+
+              <TableHead className="text-right pr-4 md:pr-8 py-2">
+                Views
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="text-white">
+            {data && data.length > 0 ? (
+              data.map((item, idx) => (
+                <TableRow key={idx} className="border-b border-[#313E41]/20">
+                  <TableCell className="px-2 md:px-4 py-3 flex items-center gap-2 md:gap-3">
+                    <img
+                      src={location}
+                      alt=""
+                      className="h-5 w-5 md:h-7 md:w-7"
+                    />
+                    <span className="truncate max-w-[100px] md:max-w-none">
+                      {item.region}
+                    </span>
+                  </TableCell>
+
+                  <TableCell className="text-right pr-4 md:pr-8 py-3">
+                    {item.views}
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={2}
+                  className="text-center py-4 text-[#BDBDBD]"
+                >
+                  No data available
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={4}></TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </div>
+    </div>
+  );
+}

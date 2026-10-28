@@ -1,0 +1,43 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import useSearchFilterContext from "../useSearchFilterContext";
+// import { SubmissionItem } from "@/redux/features/distribution/distribution.type";
+
+export default function useSearchFilterts() {
+  const { data, functions } = useSearchFilterContext();
+
+  function setSearch(searchText: string): void {
+    functions.setSearchText(searchText);
+  }
+
+  function setReleaseRange( range:  | "last_7_days"
+                                    | "last_30_days"
+                                    | "last_6_months"
+                                    | "last_1_year"
+                                    | "this_year"
+                                    | null ): void {
+    functions.setReleaseRange(range);
+  }
+
+  function setStatus( status: "all" | "active" | "inactive" ): void {
+    functions.setStatus(status);
+  }
+
+  function reset(): void {
+    functions.resetFilters();
+  }
+
+  return {
+         data: {
+                searchText: data.searchText,
+                releaseRange: data.releaseRange,
+                status: data.status,
+               },
+    functions: {
+                setSearch,
+                setReleaseRange,
+                setStatus,
+                reset,
+              },
+
+  };
+}
